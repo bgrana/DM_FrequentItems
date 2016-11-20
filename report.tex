@@ -1,0 +1,49 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{listings}
+\usepackage[toc,page]{appendix}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{float}
+
+%opening
+\title{Data Mining: Frequent Itemsets and Association rules}
+\author{Braulio Grana Guti\'errez \and Adri\'an Ram\'irez del R\'io}
+
+\begin{document}
+
+\maketitle
+
+\section{Description}
+For this assignment we had to implement the Apriori algorithm to find frequent itemsets with at least a given support in a dataset of sales transactions. As a bonus task we developed the generation of association rules with a given confidence. We implemented our solution to this exercise using Python3.
+
+\subsection{Frequent itemsets}
+We created a class named \emph{Frequent\_items} that takes a file path to the dataset as parameter in its constructor. Then we compute the first iteration of candidate items and filter them using the support threshold.
+
+Then, we keep generating iteration of candidates increasing their length by one in every iteration and filter them by their support and the support of all their subsets.
+
+Finally, we stop iterating when no more candidates are generated.
+
+\subsection{Association rules}
+In this bonus task we added a method to the original class to get the rules of association that have a level of confidence above  the given threshold according to the following formula:
+\begin{center}
+\emph{$confidence(X \rightarrow Y) = \frac{support(X \bigcup Y)}{support(X)}$}
+\end{center}
+
+For this method we receive the result of the previous part of the execise and eliminate all itemsets of size 1 that are not subsets of other itemsets of size greater than 1 in the answer of the first part. Then we calculate all possible rules by doing all the permutations of the list and, finally we check which of those rules have a confidence above the given threshold.
+
+\section{Instructions}
+In order to execute our solution certain libraries need to be installed beforehand. To install them, run the following commands (it is possible that you will need admin access):
+
+\begin{lstlisting}[language=bash]
+apt-get install python3 python3-pip
+pip3 install numpy
+\end{lstlisting}
+
+To run the code, simply go to the project folder and run:
+\begin{lstlisting}[language=bash]
+python3 src/main.py --in PATHFILE --s SUPPORT --c CONFIDENCE
+\end{lstlisting}
+
+\end{document}
